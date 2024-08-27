@@ -9,13 +9,20 @@ import (
 
 func main() {
 
-	var app *application
+	app := &application{
+		TaskList: []Task{},
+	}
 
 	appCLI := &cli.App{
 
 		Before: func(ctx *cli.Context) error {
+			app.loadTasks()
+			return nil
+		},
 
-			app = &application{}
+		After: func(ctx *cli.Context) error {
+
+			app.saveTasks()
 
 			return nil
 		},
